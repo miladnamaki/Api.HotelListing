@@ -53,7 +53,7 @@ namespace HotelListing.Controllers
         {
             try
             {
-                var hotel = await _unitOfWork.Hotels.Get(p=>p.Id==id);
+                var hotel = await _unitOfWork.Hotels.Get(p=>p.Id==id , new List<string> { "Country" });
                 var result = _mapper.Map<HotelDto>(hotel);
                 return Ok(result);
             }

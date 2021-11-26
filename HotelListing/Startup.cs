@@ -1,14 +1,19 @@
 using HotelListing.Counfiguration;
 using HotelListing.Data;
+using HotelListing.IRepository;
+using HotelListing.Repository;
+using HotelListing.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -45,6 +50,17 @@ namespace HotelListing
  
                  });
             });
+            
+            services.AddAuthentication();
+            services.COnfigureIdentity();
+
+            //services.AddIdentity<ApiUser,IdentityRole>(p=>
+            //{
+            //    p.User.RequireUniqueEmail = true;
+            //}).AddEntityFrameworkStores<DataBaseContext>().AddDefaultTokenProviders();
+            services.ConfigureJWT(Configuration);
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthManager, AuthManager>();
             services.AddAutoMapper(typeof(MapperInitilizer));
             services.AddSwaggerGen(c =>
             {

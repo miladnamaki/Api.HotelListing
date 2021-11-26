@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HotelListing.CountryDto;
 using HotelListing.Data;
+using HotelListing.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace HotelListing.Counfiguration
             CreateMap<Country, HotelListing.CountryDto.CreateCountryDto>().ReverseMap();
             CreateMap<Hotel, HotelListing.CountryDto.HotelDto>().ReverseMap();
             CreateMap<Hotel, HotelListing.CountryDto.CreateHoTelDto>().ReverseMap();
+            CreateMap<ApiUser, UserDto>().ReverseMap();
         }
 
     }
