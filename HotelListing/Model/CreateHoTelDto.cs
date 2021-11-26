@@ -31,4 +31,7 @@ namespace HotelListing.CountryDto
 
 
     }
+    public class UpdateHotelDto : CreateHoTelDto
+    {
+    }
 }

@@ -84,6 +84,7 @@ namespace HotelListing
             app.UseCors("AddPolicy");
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

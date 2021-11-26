@@ -77,3 +77,4 @@ H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.AspNetCor
 H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
 H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+H:\Project Csharp\HotelListing\HotelListing\obj\Debug\net5.0\HotelListing.csproj.AssemblyReference.cache
