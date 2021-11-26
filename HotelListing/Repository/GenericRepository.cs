@@ -1,11 +1,13 @@
 ﻿using HotelListing.Data;
 using HotelListing.IRepository;
+using HotelListing.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace HotelListing.Repository
 {
@@ -64,6 +66,21 @@ namespace HotelListing.Repository
 
             }
             return await qoury.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IPagedList<T>> GetPageList(List<string> Includes = null, RequestParams requestParams = null)
+        {
+            IQueryable<T> qoury = _db;
+
+            if (Includes is not null)
+            {
+                foreach (var IncludeProperty in Includes)
+                {
+                    qoury = qoury.Include(IncludeProperty);
+                }
+            }
+
+            return await qoury.AsNoTracking().ToPagedListAsync(requestParams.PageNumber, requestParams.Pageisze);
         }
 
         public async Task Insert(T entity)

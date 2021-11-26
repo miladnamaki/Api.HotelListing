@@ -50,14 +50,21 @@ namespace HotelListing
  
                  });
             });
-            
-            services.AddAuthentication();
-            services.COnfigureIdentity();
 
-            //services.AddIdentity<ApiUser,IdentityRole>(p=>
-            //{
-            //    p.User.RequireUniqueEmail = true;
-            //}).AddEntityFrameworkStores<DataBaseContext>().AddDefaultTokenProviders();
+            services.ConfiugureApiVersioning();
+
+            services.CounfigureHttpCacheHeaders();
+
+            services.AddMemoryCache();
+
+
+            services.CounfigureRateLimiting();
+            services.AddHttpContextAccessor();
+
+
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+
             services.ConfigureJWT(Configuration);
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthManager, AuthManager>();
@@ -65,8 +72,16 @@ namespace HotelListing
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListing", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
-            services.AddControllers();
+            services.AddControllers(conf=> 
+            {
+                conf.CacheProfiles.Add("120SecondsDuration", new CacheProfile()
+                {
+                    Duration = 120,
+                    
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,7 +96,14 @@ namespace HotelListing
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelListing v1"));
             app.UseHttpsRedirection();
 
+            app.ConfigureExeptionHandler();
+
             app.UseCors("AddPolicy");
+
+            app.UseResponseCaching();
+
+            app.UseHttpCacheHeaders();
+
             app.UseRouting();
 
             app.UseAuthentication();

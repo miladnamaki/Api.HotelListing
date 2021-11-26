@@ -2,6 +2,8 @@
 using HotelListing.CountryDto;
 using HotelListing.Data;
 using HotelListing.IRepository;
+using HotelListing.Model;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,40 +30,27 @@ namespace HotelListing.Controllers
         }
          
         [HttpGet]
+        [Route("GetCountries")]
+        [HttpCacheExpiration(CacheLocation =CacheLocation.Public,MaxAge =60)]
+        [HttpCacheValidation(MustRevalidate =false)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetCountries()
+        [ResponseCache(CacheProfileName = "120SecondsDuration")]  
+        public async Task<IActionResult> GetCountries([FromQuery] RequestParams request)
         {
-            try
-            {
-                var Countries = await _unitOfWork.Countries.GetAll();
+                var Countries = await _unitOfWork.Countries.GetPageList(null,request);
                 var result = _mapper.Map<List<CountryDto.CountryDto>>(Countries);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"SomeThing Went Wrong in the {nameof(GetCountries)}");
-                return StatusCode(500,"Internal server error . pleas try again later .");
-
-            }
         }
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}",Name = "GetCountry")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCountry(int id )
         {
-            try
-            {
                 var country = await _unitOfWork.Countries.Get(p=>p.Id==id,new List<string> { "Hotels"});
                 var result = _mapper.Map<CountryDto.CountryDto>(country);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"SomeThing Went Wrong in the {nameof(GetCountry)}"); 
-                return StatusCode(500, "Internal server error . pleas try again later .");
-
-            }
+           
         }
         [Authorize(Roles = "Administrator")]
         [HttpPost]
@@ -78,21 +67,12 @@ namespace HotelListing.Controllers
                 return BadRequest(ModelState);
 
             }
-            try
-            {
 
                 var country= _mapper.Map<Country>(model);
                 await _unitOfWork.Countries.Insert(country);
                 await _unitOfWork.Save();
 
                 return CreatedAtRoute("GetCountry", new { id = country.Id }, country);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Somting went worng is the  {nameof(CreateCountry)}");
-                return StatusCode(500, "internal server error , please try again later .");
-
-            }
         }
         [Authorize(Roles = "Administrator")]
         [HttpPut("{id:int}", Name = "UpdateCountry")]
@@ -107,8 +87,6 @@ namespace HotelListing.Controllers
                 return BadRequest(ModelState);
 
             }
-            try
-            {
                 var country = await _unitOfWork.Countries.Get(q => q.Id.Equals(id));
                 if (country is null)
                 {
@@ -119,13 +97,7 @@ namespace HotelListing.Controllers
                 _unitOfWork.Countries.Update(country);
                 await _unitOfWork.Save();
                 return NoContent();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Somting went worng is the  {nameof(UpdateCountry)}");
-                return StatusCode(500, "internal server error , please try again later .");
 
-            }
         }
     }
 }

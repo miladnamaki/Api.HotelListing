@@ -97,8 +97,9 @@ namespace HotelListing.Controllers
 
             }
         }
-        [Authorize(Roles = "Administrator")]
-        [HttpPut("{id:int}", Name = "UpdateHotel")]
+        //[Authorize(Roles = "Administrator")]
+        [Route("~/UpdateHotel/{id}")]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -126,6 +127,39 @@ namespace HotelListing.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Somting went worng is the  {nameof(CreateHotel)}");
+                return StatusCode(500, "internal server error , please try again later .");
+
+            }
+        }
+        [Authorize(Roles = "Administrator")]
+        [Route("/DeleteHotel/{id}")]
+        [HttpDelete()]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteHotel(int id)
+        {
+            if (id<1)
+            {
+                _logger.LogError($"Invalid delete Attemp In {nameof(DeleteHotel)}");
+                return BadRequest();
+            }
+            try
+            {
+                var hotel = await _unitOfWork.Hotels.Get(q => q.Id.Equals(id));
+                
+                if (hotel is null)
+                {
+                    _logger.LogError($"Invalid delete Attemp In {nameof(DeleteHotel)}");
+                    return BadRequest("submitted date is invalid ");
+                }
+                await _unitOfWork.Hotels.Delete(id);
+                await _unitOfWork.Save();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Somting went worng is the  {nameof(DeleteHotel)}");
                 return StatusCode(500, "internal server error , please try again later .");
 
             }
