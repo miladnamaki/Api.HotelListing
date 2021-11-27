@@ -78,3 +78,9 @@ H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.AspNetCor
 H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
 H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
 H:\Project Csharp\HotelListing\HotelListing\obj\Debug\net5.0\HotelListing.csproj.AssemblyReference.cache
+H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\AspNetCoreRateLimit.dll
+H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\JetBrains.Annotations.dll
+H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\Marvin.Cache.Headers.dll
+H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Versioning.dll
+H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\X.PagedList.dll
+H:\Project Csharp\HotelListing\HotelListing\bin\Debug\net5.0\X.PagedList.Mvc.Core.dll

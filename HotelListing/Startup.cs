@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using HotelListing.Counfiguration;
 using HotelListing.Data;
 using HotelListing.IRepository;
@@ -93,7 +94,16 @@ namespace HotelListing
           
             }
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelListing v1"));
+            app.UseSwaggerUI(c =>
+            {
+                //c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelListing v1");
+
+
+                string swaggerjsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
+                c.SwaggerEndpoint($"{swaggerjsonBasePath}/swagger/v1/swagger.json", "hotel Listing Api");
+                ////yek url jadid dorost kardim ke betonim document ro bebinim 
+
+            });
             app.UseHttpsRedirection();
 
             app.ConfigureExeptionHandler();
@@ -103,6 +113,8 @@ namespace HotelListing
             app.UseResponseCaching();
 
             app.UseHttpCacheHeaders();
+
+            app.UseIpRateLimiting();
 
             app.UseRouting();
 

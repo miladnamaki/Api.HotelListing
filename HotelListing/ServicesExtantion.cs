@@ -118,7 +118,8 @@ namespace HotelListing
                 {
                     Endpoint= "*", //baryae hameye endpoint hast 
                     Limit=1, //baraye yekbar call kardan 
-                    Period="10s",//1 sanie zamn bayad sabr kone .. ke khili kame 10s khube ,10m ham mitonim bezarim 
+                    Period="10s",//1 sanie zamn bayad sabr kone ..
+                                 //ke khili kame 10s khube ,10m ham mitonim bezarim 
               
                 }
             };
@@ -129,6 +130,7 @@ namespace HotelListing
             services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
             services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
             services.AddSingleton < IRateLimitConfiguration, RateLimitConfiguration>();
+            services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
 
         }
     }
