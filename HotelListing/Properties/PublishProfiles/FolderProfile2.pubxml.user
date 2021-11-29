@@ -5,8 +5,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\publish\HotelApi\</_PublishTargetUrl>
-    <History>True|2021-11-28T17:12:46.7163380Z;True|2021-11-27T21:39:07.6425668+03:30;</History>
+    <_PublishTargetUrl>H:\Project Csharp\HotelListing\HotelListing\bin\Release\net5.0\publish\</_PublishTargetUrl>
+    <History>True|2021-11-29T15:32:00.9853538Z;</History>
   </PropertyGroup>
   <ItemGroup>
     <DestinationConnectionStrings Include="sqlConnection">
@@ -15,7 +15,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   </ItemGroup>
   <ItemGroup>
     <EFMigrations Include="HotelListing.Data.DataBaseContext">
-      <Value>Data Source=.%3bInitial Catalog=ApiHotelDb%3bPersist Security Info=True%3bUser ID=milad%3bPassword=17400977 </Value>
+      <Value>Data Source=.%3bInitial Catalog=ApiHotelDb%3bintegrated Security =True</Value>
     </EFMigrations>
   </ItemGroup>
 </Project>
